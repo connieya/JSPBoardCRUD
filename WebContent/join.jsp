@@ -8,9 +8,11 @@
 </head>
 <body>
 	<jsp:include page="header.jsp" flush="false" />
+	
 	<div class="container" style="text-align: center;" >
 	<div class="col-lg-10">
 	<div class="jumbotron" style="margin-top:20px; background-color: #f0f0f0;"  >
+		<h2>회원가입 페이지</h2>
 	<form method="post" action="joinAction.jsp">
 	<div class="form-group">
     <label for="exampleInputPassword1">아이디</label>
