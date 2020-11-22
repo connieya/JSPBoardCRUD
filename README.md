@@ -1,3 +1,2 @@
-# JSPBoardCRUD
+# JSP로 간단한 게시판 CRUD 구현
 
-## JSP로 간단한 게시판 CRUD 구현
