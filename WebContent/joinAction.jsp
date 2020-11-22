@@ -1,6 +1,13 @@
 <%@page import="user.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<jsp:useBean id="user" class="user.User" scope="page"/>
+<jsp:setProperty property="id" name="user"/>
+<jsp:setProperty property="password" name="user"/>
+<jsp:setProperty property="name" name="user"/>
+<jsp:setProperty property="email" name="user"/>
+<jsp:setProperty property="gender" name="user"/>
+<% request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,18 +17,10 @@
 <body>
 	<%
 		
-		request.setCharacterEncoding("utf-8");
-		String id = request.getParameter("userID");
-		String password = request.getParameter("userPassword");
-		String email = request.getParameter("userEmail");
-		String name = request.getParameter("userName");
-		String gender = request.getParameter("userGender"); 
 		
-	
-		
-		
+		 
 		UserDAO userdao = new UserDAO();
-		userdao.join(id, password , name, email, gender);
+		userdao.join(user);
 		
 		response.sendRedirect("index.jsp");
 		

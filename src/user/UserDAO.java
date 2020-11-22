@@ -14,7 +14,7 @@ public class UserDAO {
 	
 	public UserDAO() {
 		try {
-			String url = "jdbc:mysql://localhost:3306/pgh";
+			String url = "jdbc:mysql://localhost:3306/pgh?serverTimezone=Asia/Seoul&useSSL=false";
 			String id = "root";
 			String pw = "1234";
 			
@@ -64,17 +64,17 @@ public class UserDAO {
 		return -2; // 데이터 베이스 오류
 	}
 	
-	public void join(String id, String pw , String name, String email, String gender) {
+	public void join(User user) {
 		
 		String sql = "insert into user(id, password, name, email,gender) values(?,?,?,?,?)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
-			pstmt.setString(2, pw);
-			pstmt.setString(3, name);
-			pstmt.setString(4, email);
-			pstmt.setString(5, gender);
+			pstmt.setString(1, user.getId());
+			pstmt.setString(2, user.getPassword());
+			pstmt.setString(3, user.getName());
+			pstmt.setString(4, user.getEmail());
+			pstmt.setString(5, user.getGender());
 			
 			int n = pstmt.executeUpdate();
 			if(n==1) {
