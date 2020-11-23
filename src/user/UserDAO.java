@@ -64,7 +64,7 @@ public class UserDAO {
 		return -2; // 데이터 베이스 오류
 	}
 	
-	public void join(User user) {
+	public int join(User user) {
 		
 		String sql = "insert into user(id, password, name, email,gender) values(?,?,?,?,?)";
 		
@@ -76,11 +76,8 @@ public class UserDAO {
 			pstmt.setString(4, user.getEmail());
 			pstmt.setString(5, user.getGender());
 			
-			int n = pstmt.executeUpdate();
-			if(n==1) {
-			System.out.println("회원가입 성공");
-			}else
-				System.out.println("회원가입 실패임");
+			return pstmt.executeUpdate();
+			
 		}catch(Exception e) {
 			System.out.println("회원가입 실패");
 			e.printStackTrace();
@@ -93,6 +90,7 @@ public class UserDAO {
 			}
 			
 		}
+		return -1; //데이터 베이스 오휴
 	}
 	
 }
