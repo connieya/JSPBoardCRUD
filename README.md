@@ -99,3 +99,19 @@ input 태그 안에 name과 , User 클래스 변수명이 같기 때문에
 <jsp:setProperty property="*" name="user"/>
 ```
 사용 가능
+
+
+## 로그인 , 세션 설정하기
+
+![세션](./image/로그인화면.PNG)
+
+
+로그인을 하면 세션을 설정해준다.
+
+![세션코드](./image/loginSession.PNG)
+
+```
+session.setAttribute(세션이름 , 세션 값);
+
+session.getAttribute(세션이름);
+```
