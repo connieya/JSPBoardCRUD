@@ -1,3 +1,6 @@
+<%@page import="board.Board"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -36,12 +39,24 @@
 				</tr>
 			</thead>
 			<tbody>
+			<%
+				BoardDAO boardlist = new BoardDAO();
+				
+				ArrayList<Board> list =	boardlist.list();
+				for(int i=0; i< list.size(); i++){
+					
+					
+					%>
+			
 				<tr>
-					<td>1</td>
-					<td>안녕</td>
-					<td>박건희</td>
-					<td>2020/11/23</td>
+					<td><%= list.get(i).getBno() %></td>
+					<td><%= list.get(i).getTitle() %></td>
+					<td><%= list.get(i).getWriter() %></td>
+					<td><%= list.get(i).getCreateTime() %></td>
 				</tr>
+				<% 
+					}
+			%>
 			</tbody>
 			</table>
 		

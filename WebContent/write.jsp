@@ -19,10 +19,6 @@
     <input type="text" class="form-control"  name="title">
   </div>
   <div class="form-group">
-    	<h2>작성자:</h2>
-    <input type="text" class="form-control"  name="writer">
-  </div>
-  <div class="form-group">
   		<h2>내용:</h2>
   <textarea class="form-control" rows="5" name="content"></textarea>
 	</div>
