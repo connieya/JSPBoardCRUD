@@ -8,6 +8,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	
+	 #detail{
+	 	color: black;
+	 }
+</style>
 </head>
 <body>
 	<jsp:include page="header.jsp"/>
@@ -42,6 +48,7 @@
 			<%
 				int pagenum = 1;  // 기본 페이지는 1페이지니깐 초기화 시켜줌
 			
+				//여기서 request.getParameter는 뭔데?....
 				if(request.getParameter("pagenum") != null){
 					pagenum = Integer.parseInt(request.getParameter("pagenum"));
 				}
@@ -55,7 +62,7 @@
 			
 				<tr>
 					<td><%= list.get(i).getBno() %></td>
-					<td><%= list.get(i).getTitle() %></td>
+					<td><a id="detail" href="detail.jsp?bno=<%=list.get(i).getBno()%>"><%= list.get(i).getTitle() %></a></td>
 					<td><%= list.get(i).getWriter() %></td>
 					<td><%= list.get(i).getCreateTime() %></td>
 				</tr>
@@ -70,7 +77,7 @@
 			%>
 			 		<a href="board.jsp?pagenum=<%= pagenum -1 %>" class="btn btn-success btn-arraw-left">이전</a>
 			<%
-				} if(boardlist.nextPage(pagenum +1)) {
+				} else if(boardlist.nextPage(pagenum +1)) {
 					
 				
 			 %>

@@ -49,7 +49,8 @@ public class BoardDAO {
 		}finally {
 			try {
 			if(pstmt !=null) pstmt.close();
-			if(conn != null) conn.close();
+			if(conn !=null) conn.close();
+
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -59,6 +60,25 @@ public class BoardDAO {
 		
 		return -1; // DB 오류
 	}
+	public int next() {
+		String sql = "select bno from board order by bno desc";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1) +1;
+			}
+			
+			return 1; // 게시글이 하나도 없어서 첫번째 게시물인 경우
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return -1; // 데이터베이스 오류
+	}
+	
+	
 	
 	public ArrayList<Board> list(int pagenum){
 		
@@ -84,7 +104,8 @@ public class BoardDAO {
 		}finally {
 			try {
 			if(pstmt !=null) pstmt.close();
-			if(conn != null) conn.close();
+			if(conn !=null) conn.close();
+
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -94,23 +115,6 @@ public class BoardDAO {
 		return boardList;
 	}
 	
-	public int next() {
-		String sql = "select bno from board order by bno desc";
-		
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				return rs.getInt(1) +1;
-			}
-			
-			return 1; // 게시글이 하나도 없어서 첫번째 게시물인 경우
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return -1; // 데이터베이스 오류
-	}
 	
 	
 	// 페이지를 게시글 10개 단위로 끊으니깐, 만약에 10개가 안되면 다음 버튼이 없어야함
@@ -120,9 +124,9 @@ public class BoardDAO {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1,next() - (pagenum-1)*10);
 			rs = pstmt.executeQuery();
+			System.out.println("확인!!!");
 			if(rs.next()) {
-				
-				return true; // 다음 페이지로 넘어감 
+				return true; // true니깐  다음 페이지로 넘어갈 수 있음 
 			}
 			
 		}catch(Exception e) {
@@ -130,6 +134,33 @@ public class BoardDAO {
 		}
 		
 		return false; 
+	}
+	
+	public Board detail(int bno) {
+		
+		String sql = "select * from  board where bno = ?";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				Board board = new Board();
+				board.setBno(rs.getInt(1));
+				board.setTitle(rs.getString(2));
+				board.setContent(rs.getString(3));
+				board.setWriter(rs.getString(4));
+				board.setCreateTime(rs.getTimestamp(5));
+				
+				return board;
+			}
+			
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 }
