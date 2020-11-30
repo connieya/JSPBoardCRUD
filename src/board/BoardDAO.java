@@ -39,8 +39,8 @@ public class BoardDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, title);
-			pstmt.setString(2, userID);
-			pstmt.setString(3, content);
+			pstmt.setString(2, content);
+			pstmt.setString(3, userID);
 			System.out.println("글 등록 성공");
 			return pstmt.executeUpdate();
 		}catch(Exception e) {
@@ -60,12 +60,13 @@ public class BoardDAO {
 		return -1; // DB 오류
 	}
 	
-	public ArrayList<Board> list(){
+	public ArrayList<Board> list(int pagenum){
 		
-		String sql = "select * from board";
+		String sql = "select * from board where bno < ? order by bno  desc limit 10 ;";
 		ArrayList<Board> boardList = new ArrayList<Board>();		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,next() - (pagenum-1)*10);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Board board = new Board();
@@ -91,6 +92,44 @@ public class BoardDAO {
 		}
 		
 		return boardList;
+	}
+	
+	public int next() {
+		String sql = "select bno from board order by bno desc";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1) +1;
+			}
+			
+			return 1; // 게시글이 하나도 없어서 첫번째 게시물인 경우
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return -1; // 데이터베이스 오류
+	}
+	
+	
+	// 페이지를 게시글 10개 단위로 끊으니깐, 만약에 10개가 안되면 다음 버튼이 없어야함
+	public boolean nextPage(int pagenum) {
+		String sql = "select * from board where bno < ?";		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,next() - (pagenum-1)*10);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				
+				return true; // 다음 페이지로 넘어감 
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false; 
 	}
 
 }

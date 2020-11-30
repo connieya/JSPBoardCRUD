@@ -23,7 +23,7 @@
 		}
  		
  			
- 			if( board.getTitle()== null || board.getContent() == null || board.getWriter() ==null){
+ 			if( board.getTitle()== null || board.getContent() == null ){
  				PrintWriter script = response.getWriter();
  				script.println("<script>");
  				script.println("alert('입력이 안된 사항이 있습니다.')");

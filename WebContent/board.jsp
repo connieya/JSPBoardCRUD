@@ -40,9 +40,14 @@
 			</thead>
 			<tbody>
 			<%
+				int pagenum = 1;  // 기본 페이지는 1페이지니깐 초기화 시켜줌
+			
+				if(request.getParameter("pagenum") != null){
+					pagenum = Integer.parseInt(request.getParameter("pagenum"));
+				}
 				BoardDAO boardlist = new BoardDAO();
 				
-				ArrayList<Board> list =	boardlist.list();
+				ArrayList<Board> list =	boardlist.list(pagenum);
 				for(int i=0; i< list.size(); i++){
 					
 					
@@ -59,6 +64,20 @@
 			%>
 			</tbody>
 			</table>
+			<%
+				if(pagenum != 1){
+			
+			%>
+			 		<a href="board.jsp?pagenum=<%= pagenum -1 %>" class="btn btn-success btn-arraw-left">이전</a>
+			<%
+				} if(boardlist.nextPage(pagenum +1)) {
+					
+				
+			 %>
+			 	<a href="board.jsp?pagenum=<%= pagenum +1 %>" class="btn btn-success btn-arraw-left">다음</a>
+			 <%
+				}
+			 %>
 		
 		</div>
 	</div>
