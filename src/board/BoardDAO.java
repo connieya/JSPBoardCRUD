@@ -12,7 +12,7 @@ public class BoardDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	
+	//DB 연결
 	public BoardDAO() {
 
 	
@@ -32,6 +32,8 @@ public class BoardDAO {
 	
 	}
 	
+	
+	// 글 등록
 	public int write(String title, String userID, String content) {
 		
 		String sql = "insert into board(title,content,writer) values(?,?,?)";
@@ -60,6 +62,8 @@ public class BoardDAO {
 		
 		return -1; // DB 오류
 	}
+	
+	// 게시글 번호 출력하기 위한 메소드
 	public int next() {
 		String sql = "select bno from board order by bno desc";
 		
@@ -79,7 +83,7 @@ public class BoardDAO {
 	}
 	
 	
-	
+	// 게시판 글 목록
 	public ArrayList<Board> list(int pagenum){
 		
 		String sql = "select * from board where bno < ? order by bno  desc limit 10 ;";
@@ -136,6 +140,7 @@ public class BoardDAO {
 		return false; 
 	}
 	
+	//글 상세보기 페이지
 	public Board detail(int bno) {
 		
 		String sql = "select * from  board where bno = ?";
@@ -161,6 +166,57 @@ public class BoardDAO {
 		}
 		
 		return null;
+	}
+	
+	//글 수정하기
+	public int update(int bno, String title, String content) {
+		String sql = "update board set title = ? , content =?  where bno = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, bno);
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+		}finally {
+			try {
+			if(pstmt !=null) pstmt.close();
+			if(conn !=null) conn.close();
+
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return -1;
+	}
+	
+	public int delete(int bno) {
+		String sql =  "delete from board where bno =?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+		}finally {
+			try {
+			if(pstmt !=null) pstmt.close();
+			if(conn !=null) conn.close();
+
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return -1;
+		
 	}
 
 }

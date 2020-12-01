@@ -52,53 +52,36 @@
 	
 	%>
 	
-	<div class="container">
+	<div class="container" >
 		<div class="row">
-			<table class="table table-striped" style="text-align :center; border: 1px solid #dddddd">
+	 		<form method="post" action="updateAction.jsp?bno=<%= bno %>">
+			<table class="table table-striped" style="text-align :center; border: 1px solid #dddddd; width : 800px;" >
 				<thead>
 					<tr>
-						<th colspan="3" style="background-color: #eeeeee; text-align: center;">게시판 글보기</th>
+						<th colspan="2" style="background-color: #eeeeee; text-align: center;">게시판 글 수정</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td style="width:20%">글 제목</td>
-						<td colspan="2"><%=board.getTitle() %></td>
+						
+						<td><input type="text" class="form-control" name="title" value="<%= board.getTitle() %>" /></td>
 					</tr>
 					
 					<tr>
-						<td >작성자</td>
-						<td colspan="2"><%=board.getWriter() %></td>
+						<td><textarea class="form-control" name="content" style="height: 350px;" maxlength="2048" ><%= board.getContent() %></textarea></td>
 					</tr>
 					
-					<tr>
-						<td >작성일</td>
-						<td colspan="2"><%=board.getCreateTime() %></td>
-					</tr>
-					<tr>
-						<td >글 내용</td>
-						<td colspan="2" style="height: 200px; text-align: left;"><%=board.getContent() %></td>
-					</tr>
+					
 				</tbody>
-			</table>
-			<a  style="margin: 0px 5px" href="board.jsp" class="btn btn-primary">목록</a>
-			<% 
-			
-				if(UserId != null && UserId.equals(board.getWriter())){
-					
-					
-			%>
-				<a style="margin: 0px 5px"href="update.jsp?bno=<%= bno %>" class="btn btn-primary">수정</a>
 				
-				<a style="margin: 0px 5px" href="deleteAction.jsp?bno=<%= bno %>" class="btn btn-primary">삭제</a>		
-			
-			<% 
-			
-				}
-			
-			%>
-		</div>
+			</table>
+				<input type="submit" class ="btn btn-primary pull-right" value="수정" />
+				<a  style="margin: 0px 5px" href="detail.jsp?bno=<%= board.getBno() %>" class="btn btn-primary">취소</a>
 	
+			</form>
+			
+		</div>
+		
 	</div>
 	
 </body>

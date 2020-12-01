@@ -15,8 +15,9 @@
 <title>Insert title here</title>
 </head>
 <body>
- 		<%
 
+ 		<%
+		// 글 등록 하는 파일
 		String UserId = null;
 		if(session.getAttribute("sessionID") != null){
 			UserId = (String) session.getAttribute("sessionID");
