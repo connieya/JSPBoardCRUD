@@ -8,10 +8,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="css/bootstrap.css">
 <style>
 	
 	 #detail{
 	 	color: black;
+	 }
+	 *{
+	 	font-size : 20px;
+	 }
+	 .btn{
+	 	font-size : 20px;
 	 }
 </style>
 <link rel="stylesheet" href="css/custom.css" >
@@ -19,14 +26,14 @@
 <body>
 	<jsp:include page="header.jsp"/>
 	<br/>
-	<h1>게시판</h1> <br/>
+	<h1>게시판 리스트</h1> <br/>
 	<% 
 		String sessionID = null;
 		if(session.getAttribute("sessionID") != null){
 		sessionID = (String) session.getAttribute("sessionID");
 		}
 		if(sessionID !=null) {
-		
+			
 		%>
 		<a href="write.jsp" class="btn btn-primary pull-right" style="float:right; margin-right:100px;" >글쓰기</a>
 	<%

@@ -2,12 +2,22 @@
 @import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
 
 *{
-	font-family : 'Nanum Gothic'
+	font-family : 'Nanum Gothic';
+	font-size : 20px;
+
 }
 
+body{
+	font-size : 20px;
+}
 h1{
 	
 	font-family : 'Hanna';
+}
+
+button {
+	font-size : 20px;
+	
 }
 
 ul > li{
