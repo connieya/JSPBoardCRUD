@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import board.Board;
+
 public class UserDAO {
 
 	private Connection conn;
@@ -26,6 +28,26 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	
+	}
+	
+	//mysql에서 auto increment 쓰지않고 회원 no 숫자 1씩 증가시키기
+	public int next() {
+		
+		String sql = "select no from user order by no desc";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1) +1;
+			}
+			
+			return 1; // 게시글이 하나도 없어서 첫번째 게시물인 경우
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return -1; // 데이터베이스 오류
 	}
 	
 	public int login(String userID, String userPassword) {
@@ -66,15 +88,16 @@ public class UserDAO {
 	
 	public int join(User user) {
 		
-		String sql = "insert into user(id, password, name, email,gender) values(?,?,?,?,?)";
+		String sql = "insert into user values(?,?,?,?,?,?)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, user.getId());
-			pstmt.setString(2, user.getPassword());
-			pstmt.setString(3, user.getName());
-			pstmt.setString(4, user.getEmail());
-			pstmt.setString(5, user.getGender());
+			pstmt.setInt(1, next());
+			pstmt.setString(2, user.getId());
+			pstmt.setString(3, user.getPassword());
+			pstmt.setString(4, user.getName());
+			pstmt.setString(5, user.getEmail());
+			pstmt.setString(6, user.getGender());
 			
 			return pstmt.executeUpdate();
 			
@@ -91,6 +114,85 @@ public class UserDAO {
 			
 		}
 		return -1; //데이터 베이스 오휴
+	}
+	
+	public int update(User user) {
+		
+		String sql = "update user set name = ? , password =? , email =? where id =? ";
+		
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getName());
+			pstmt.setString(2, user.getPassword());
+			pstmt.setString(3, user.getEmail());
+			pstmt.setString(4, user.getId());
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+		}finally {
+			try {
+			if(pstmt !=null) pstmt.close();
+			if(conn !=null) conn.close();
+
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return -1;
+	}
+	
+	public User userDetail(String id) {
+		
+		String sql = "select * from user where id= ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				User user = new User();
+				user.setId(rs.getString(2));
+				user.setPassword(rs.getString(3));
+				user.setName(rs.getString(4));
+				user.setEmail(rs.getString(5));
+				return user;
+			}
+			
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public int delete(String id) {
+		
+		String sql ="delete from user where id=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+		}finally {
+			try {
+			if(pstmt !=null) pstmt.close();
+			if(conn !=null) conn.close();
+
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return -1;
+		
 	}
 	
 }

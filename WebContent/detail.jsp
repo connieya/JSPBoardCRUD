@@ -90,7 +90,7 @@
 			%>
 				<a style="margin: 0px 5px"href="update.jsp?bno=<%= bno %>" class="btn btn-primary">수정</a>
 				
-				<a style="margin: 0px 5px" href="deleteAction.jsp?bno=<%= bno %>" class="btn btn-primary">삭제</a>		
+				<a style="margin: 0px 5px" onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?bno=<%= bno %>" class="btn btn-primary">삭제</a>		
 			
 			<% 
 			

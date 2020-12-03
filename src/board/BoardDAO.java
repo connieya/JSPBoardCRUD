@@ -36,13 +36,14 @@ public class BoardDAO {
 	// 글 등록
 	public int write(String title, String userID, String content) {
 		
-		String sql = "insert into board(title,content,writer) values(?,?,?)";
+		String sql = "insert into board(bno, title,content,writer) values(?,?,?,?)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, title);
-			pstmt.setString(2, content);
-			pstmt.setString(3, userID);
+			pstmt.setInt(1, next() );
+			pstmt.setString(2, title);
+			pstmt.setString(3, content);
+			pstmt.setString(4, userID);
 			System.out.println("글 등록 성공");
 			return pstmt.executeUpdate();
 		}catch(Exception e) {

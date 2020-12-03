@@ -1,7 +1,8 @@
 package user;
 
 public class User {
-
+	
+	private int    no;
 	private String id;
 	private String password;
 	private String name;
@@ -11,6 +12,12 @@ public class User {
 	
 	
 	
+	public int getNo() {
+		return no;
+	}
+	public void setNo(int no) {
+		this.no = no;
+	}
 	public String getName() {
 		return name;
 	}

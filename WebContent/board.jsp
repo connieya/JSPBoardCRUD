@@ -14,6 +14,7 @@
 	 	color: black;
 	 }
 </style>
+<link rel="stylesheet" href="css/custom.css" >
 </head>
 <body>
 	<jsp:include page="header.jsp"/>
