@@ -20,13 +20,22 @@
 	 .btn{
 	 	font-size : 20px;
 	 }
+	 a.btn{
+	 	margin : 5px;
+	 	text-align: center;
+	 	width: 50px;
+	 	height: 40px;
+	 }
+	 h1#boardlist{
+	 	text-align: center;
+	 }
 </style>
 <link rel="stylesheet" href="css/custom.css" >
 </head>
 <body>
 	<jsp:include page="header.jsp"/>
 	<br/>
-	<h1>게시판 리스트</h1> <br/>
+	<h1 id="boardlist">게시판 리스트</h1> <br/>
 	<% 
 		String sessionID = null;
 		if(session.getAttribute("sessionID") != null){
@@ -67,7 +76,7 @@
 					
 					
 					%>
-			
+	
 				<tr>
 					<td><%= list.get(i).getBno() %></td>
 					<td><a id="detail" href="detail.jsp?bno=<%=list.get(i).getBno()%>"><%= list.get(i).getTitle() %></a></td>
@@ -79,20 +88,20 @@
 			%>
 			</tbody>
 			</table>
-			<%
-				if(pagenum != 1){
+		 <%
+		 	if(pagenum != 1) {
+		 	
+		 %> 
+			 <a href="board.jsp?pagenum=<%= pagenum -1 %>" class="btn btn-success btn-arraw-left">이전</a>
+		<%      
+		 	}else {
+		%>
+			<a href="board.jsp?pagenum=<%= pagenum +1 %>" class="btn btn-success btn-arraw-left">다음</a>
+		<% 
+		 	}		
+		%>
 			
-			%>
-			 		<a href="board.jsp?pagenum=<%= pagenum -1 %>" class="btn btn-success btn-arraw-left">이전</a>
-			<%
-				} else if(boardlist.nextPage(pagenum +1)) {
-					
-				
-			 %>
-			 	<a href="board.jsp?pagenum=<%= pagenum +1 %>" class="btn btn-success btn-arraw-left">다음</a>
-			 <%
-				}
-			 %>
+			
 		
 		</div>
 	</div>

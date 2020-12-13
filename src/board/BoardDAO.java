@@ -196,6 +196,7 @@ public class BoardDAO {
 		return -1;
 	}
 	
+	// 게시글 직접 삭제
 	public int delete(int bno) {
 		String sql =  "delete from board where bno =?";
 		try {
@@ -219,5 +220,28 @@ public class BoardDAO {
 		return -1;
 		
 	}
+	
+	//회원탈퇴시 게시글 삭제
+	public int alldelete(String userID) {
+		String sql = "delete from board where writer =?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userID);
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+		}finally {
+			try {
+			if(pstmt !=null) pstmt.close();
+			if(conn !=null) conn.close();
 
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+	}
+		return -1;
+
+}
 }

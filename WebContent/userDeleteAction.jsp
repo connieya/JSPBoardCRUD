@@ -27,8 +27,13 @@
 			script.println("</script>");
 		
 		}else{
+			
 			UserDAO dao = new UserDAO();
+			//회원 탈퇴
 			int result = dao.delete(userID);
+			// 회원탈퇴시 게시글 까지 삭제 
+			BoardDAO dao2 = new BoardDAO();
+			int result2 = dao2.alldelete(userID);
 			if(result == -1){
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
@@ -36,11 +41,20 @@
 				script.println("history.back()");
 				script.println("</script>");
 			}else{
-				PrintWriter script = response.getWriter();
-				script.println("<script>");
-				script.println("alert('회원 탈퇴 성공')");
-				script.println("location.href = 'logout.jsp'");
-				script.println("</script>");
+				if(result2 == -1){
+					PrintWriter script = response.getWriter();
+					script.println("<script>");
+					script.println("alert('게시글 글 삭제 실패')");
+					script.println("history.back()");
+					script.println("</script>");
+				}else{
+					PrintWriter script = response.getWriter();
+					script.println("<script>");
+					script.println("alert('회원 탈퇴 성공')");
+					script.println("location.href = 'logout.jsp'");
+					script.println("</script>");
+				}
+				
 			}
 				
 		}
