@@ -1,12 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<jsp:useBean id="user" class="user.User" scope="page" />
-<jsp:setProperty property ="id" name="user" />
-<jsp:setProperty property ="password" name="user" />
-<jsp:setProperty property ="name" name="user" />
-<jsp:setProperty property ="email" name="user" />
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,53 +13,41 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 </head>
 <body>
-<% 
-	String sessionID = null;
-	if(session.getAttribute("sessionID") != null){
-		sessionID = (String) session.getAttribute("sessionID");
-	}
-
-%>
+<jsp:useBean id="user" scope="session" class="user.User"/>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top ">
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/index.jsp">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="board.jsp">게시판</a>
+        <a class="nav-link" href="<%=request.getContextPath() %>/board/list">게시판</a>
       </li>
       <%
-      	if(sessionID == null){
-      		
+      	if(user.getEmail() == null){    		
       		%>
       		<li class="nav-item" >
         <a class="nav-link dropdown-toggle justify-content-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           접속하기
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="login.jsp">로그인</a>
-          <a class="dropdown-item" href="join.jsp">회원가입</a>     
+          <a class="dropdown-item" href="<%=request.getContextPath() %>/auth/login">로그인</a>
+          <a class="dropdown-item" href="<%=request.getContextPath() %>/user/add">회원가입</a>     
         </div>
       </li>
       <%
       	}else{
-      		
-      		%>
-      		
+      		%>     		
       		<li class="nav-item" >
         <a class="nav-link dropdown-toggle justify-content-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           회원관리
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="logout.jsp">로그아웃</a> 
-          <a class="dropdown-item" href="userUpdate.jsp?id="<%=sessionID %>>회원 수정</a>   
-        </div>
-        
-      </li>
-      
-      		<% 
-      		
+          <a class="dropdown-item" href="<%=request.getContextPath() %>/auth/logout">로그아웃</a> 
+          <a class="dropdown-item" href="userUpdate.jsp?id="<%=user.getId() %>>>회원 수정</a>   
+        </div>      
+      </li>  
+      		<%     		
       	}
       %>
       

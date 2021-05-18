@@ -51,24 +51,18 @@ public class UserDAO {
 	}
 	
 	public int login(String userID, String userPassword) {
-		
-		String sql = "select password from user where id = ?";
-		
+		String sql = "select password from user where id = ?";	
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
-			System.out.println("select 시도");
 			if(rs.next()) {
 				if(rs.getString(1).equals(userPassword)) {
-					System.out.println("로그인 성공");
 					return 1; //로그인 성공
 				}	
 				else
-					System.out.println("비밀번호가 틀림");
 					return 0; // 비밀번호 불일치
 			}
-			System.out.println("아이디가 없음");
 			return -1; //아이디가 없음
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -96,8 +90,8 @@ public class UserDAO {
 			pstmt.setString(2, user.getId());
 			pstmt.setString(3, user.getPassword());
 			pstmt.setString(4, user.getName());
-			pstmt.setString(5, user.getEmail());
-			pstmt.setString(6, user.getGender());
+			pstmt.setString(5, user.getGender());
+			pstmt.setString(6, user.getEmail());
 			
 			return pstmt.executeUpdate();
 			

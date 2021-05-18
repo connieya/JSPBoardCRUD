@@ -9,8 +9,7 @@ public class Board {
 	private int bno;
 	private String title;
 	private String content;
-	private String writer; //작성자를 User에 있는 Id로 연동하고 싶어서
-	// User 타입형을 가져왔다.
+	private String writer; 
 	private Timestamp createTime;
 	
 	
@@ -19,32 +18,32 @@ public class Board {
 	public int getBno() {
 		return bno;
 	}
-	public void setBno(int bno) {
-		this.bno = bno;
+	public Board setBno(int bno) {
+		return this;
 	}
 	public String getTitle() {
 		return title;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public Board setTitle(String title) {
+		return this;
 	}
 	public String getContent() {
 		return content;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public Board setContent(String content) {
+		return this;
 	}
 	public String getWriter() {
 		return writer;
 	}
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public Board setWriter(String writer) {
+		return this;
 	}
 	public Timestamp getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(Timestamp createTime) {
-		this.createTime = createTime;
+	public Board setCreateTime(Timestamp createTime) {
+		return this;
 	}
 	
 	

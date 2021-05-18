@@ -27,7 +27,7 @@
 			script.println("location.href ='index.jsp'");
 			script.println("</script>");
 		} */
-	
+		
 	
 		if(user.getId() == null || user.getPassword() == null || user.getEmail() ==null 
 		|| user.getName() == null || user.getGender() == null){

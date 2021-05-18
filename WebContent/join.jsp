@@ -15,7 +15,7 @@
 	<div class="col-lg-10">
 	<div class="jumbotron" style="margin-top:20px; background-color: #f0f0f0;"  >
 		<h2>회원가입 페이지</h2>
-	<form method="post" action="joinAction.jsp">
+	<form method="post" action="user/add">
 	<div class="form-group">
     <label for="exampleInputPassword1">아이디</label>
     <input type="text" class="form-control" name="id" />
