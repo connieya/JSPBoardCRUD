@@ -21,11 +21,9 @@ public class BoardDeleteServlet extends HttpServlet {
 			ServletContext sc = this.getServletContext();
 			Connection conn = (Connection) sc.getAttribute("conn");
 			
-			BoardDAO dao = new BoardDAO();
-			dao.setConnection(conn);
+			BoardDAO boardDao = (BoardDAO) sc.getAttribute("dao");
 			
-			dao.delete(Integer.parseInt(req.getParameter("bno")));
-			
+			boardDao.delete(Integer.parseInt(req.getParameter("bno")));
 			resp.sendRedirect("list");
 		} catch (Exception e) {
 			e.printStackTrace();

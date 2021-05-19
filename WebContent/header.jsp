@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>       
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,39 +19,28 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/index.jsp">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="<%=request.getContextPath()%>/home.do">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<%=request.getContextPath() %>/board/list">게시판</a>
+        <a class="nav-link" href="<%=request.getContextPath() %>/board/list.do">게시판</a>
       </li>
-      <%
-      	if(user.getEmail() == null){    		
-      		%>
-      		<li class="nav-item" >
-        <a class="nav-link dropdown-toggle justify-content-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          접속하기
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="<%=request.getContextPath() %>/auth/login">로그인</a>
-          <a class="dropdown-item" href="<%=request.getContextPath() %>/user/add">회원가입</a>     
-        </div>
+      		<c:if test="${empty sessionScope.user}">
+      	<li class="nav-item" >
+          <a class="nav-link" href="login.do">로그인</a>
       </li>
-      <%
-      	}else{
-      		%>     		
-      		<li class="nav-item" >
-        <a class="nav-link dropdown-toggle justify-content-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          회원관리
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="<%=request.getContextPath() %>/auth/logout">로그아웃</a> 
-          <a class="dropdown-item" href="userUpdate.jsp?id="<%=user.getId() %>>>회원 수정</a>   
-        </div>      
-      </li>  
-      		<%     		
-      	}
-      %>
-      
+      <li class="nav-item" >
+          <a class="nav-link" href="user/add.do">회원가입</a>     
+      </li>
+      		</c:if>
+      			<li class="nav-item">
+        	<span>${sessionScope.user.name}</span>
+      			</li>
+      	<li class="nav-item">
+          <a class="nav-link" href="logout.do">로그아웃</a> 
+         </li>
+         <li>
+          <a class="nav-link" href="user/update.do?no=${user.no}">회원 수정</a>   
+      </li>        
     </ul>
    
   </div>

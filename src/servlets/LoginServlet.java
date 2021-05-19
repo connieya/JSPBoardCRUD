@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import user.User;
+import user.UserDAO;
 
 
 @WebServlet("/auth/login")
@@ -29,22 +30,15 @@ public class LoginServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
 		
 		try {
 			ServletContext sc = this.getServletContext();
-			conn = (Connection) sc.getAttribute("conn");
-			stmt = conn.prepareStatement("select * from user where id =? and password =?");
-			stmt.setString(1, req.getParameter("id"));
-			stmt.setString(2, req.getParameter("password"));
-			rs = stmt.executeQuery();
-			if(rs.next()) {
-				User user = new User()
-						.setEmail(rs.getString("email")).setName(rs.getString("name")).setNo(rs.getInt("no"));
+			UserDAO dao = (UserDAO) sc.getAttribute("dao");
+			User user = dao.login(req.getParameter("id"), req.getParameter("password"));
+			if(user !=null) {
 				HttpSession session = req.getSession();
 				session.setAttribute("user", user);
+				resp.sendRedirect("../board/list");
 			}else {
 				RequestDispatcher rd = req.getRequestDispatcher("/auth/LoginFail.jsp");
 				rd.forward(req, resp);
