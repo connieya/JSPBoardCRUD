@@ -2,25 +2,40 @@ package controls;
 
 import java.util.Map;
 
-import user.User;
-import user.UserDAO;
+import bind.DataBinding;
+import dao.MySqlUserDAO;
+import dao.UserDao;
+import vo.User;
 
-public class UserUpdateController implements Controller {
+
+public class UserUpdateController implements Controller ,DataBinding {
+	UserDao userDao;
+	
+	public UserUpdateController setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+		return this;
+	}
 
 	@Override
 	public String execute(Map<String, Object> model) throws Exception {
-		UserDAO userDAO = (UserDAO) model.get("user");
+		User user = (User) model.get("user");
 
-		if (model.get("userUpdate") == null) {
+		if (user.getEmail() == null) {
 			Integer no = (Integer) model.get("no");
-			User user = userDAO.userDetail(no);
-			model.put("user", user);
+			User detailInfo = userDao.userDetail(no);
 			return "/user/UserForm.jsp";
 		} else {
-			User user = (User) model.get("userUpdate");
-			userDAO.update(user);
+			userDao.update(user);
 			return "redirect:home.do";
 		}
+	}
+
+	@Override
+	public Object[] getDataBinders() {
+		return new Object[] {
+				"no", Integer.class,
+				"user" , vo.User.class
+		};
 	}
 
 }

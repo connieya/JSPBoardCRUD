@@ -41,10 +41,20 @@
 ### `페이지 컨트롤러의 진화`
 
 - 페이지 컨트롤러를 서블릿 -> 일반 클래스로 전환함
-- BoardListController , UserAddController 생성
+- BoardListServlet , BoardDeleteServlet.. 등 삭제
+- BoardListController , UserAddController..  생성
 - 서블릿은 Get 요청과 Post 요청을 구분할 수 있음
 - 일반 클래스는 클라이언트 요청에 대해 Get 과 Post를 구분 할 수 없음
 - Map 객체에 VO 객체가 있으면 Post 요청 , 없으면 Get 요청으로 간주함
+
+### `DI를 이용한 빈 의존성 관리`
+- 의존 객체와의 결합도 증가에 따라 문제가 발생할 수 있다.
+- 의존 객체에 변경이 발생하면 의존 객체를 사용하는 모든 코드를 변경해야 한다.
+- 대체가 어렵다(MySQL 데이터베이스 -> 오라클 변경시 일부 SQL문을 변경해야함)
+- 의존 객체를 외부에서 주입하자.
+- Controller에 Dao를 주입 받기 위한 인스턴스 변수, 셋터 메서드 추가
+
+
 
 ## 메인화면
 

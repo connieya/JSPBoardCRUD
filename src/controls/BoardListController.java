@@ -2,15 +2,21 @@ package controls;
 
 import java.util.Map;
 
-import board.BoardDAO;
+import dao.BoardDAO;
+
 
 public class BoardListController implements Controller {
+	BoardDAO boardDao;
+	
+	public BoardListController setBoardDao(BoardDAO boardDao) {
+		this.boardDao = boardDao;
+		return this;
+	}
 
 	@Override
 	public String execute(Map<String, Object> model) throws Exception {
-		BoardDAO boardDAO = (BoardDAO) model.get("boardDao");
 		int pagenum =1;
-		model.put("boards", boardDAO.list(pagenum));
+		model.put("boards", boardDao.list(pagenum));
 		return "/board/BoardList.jsp";
 	}
 

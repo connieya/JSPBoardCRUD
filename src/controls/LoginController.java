@@ -4,16 +4,22 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import user.User;
-import user.UserDAO;
+import dao.MySqlUserDAO;
+import vo.User;
+
 
 public class LoginController implements Controller {
+	MySqlUserDAO userDao;
+	
+	public LoginController setUserDao(MySqlUserDAO userDao) {
+		this.userDao = userDao;
+		return this;
+	}
 	@Override
 	public String execute(Map<String, Object> model) throws Exception {
 		if(model.get("loginInfo") == null) {
 			return "/auth/LoginForm.jsp";
 		}else {
-			UserDAO userDao = (UserDAO) model.get("userDao");
 			User loginInfo = (User) model.get("loginInfo");
 		
 			User user = userDao.login(

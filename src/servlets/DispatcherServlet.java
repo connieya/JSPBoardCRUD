@@ -11,12 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bind.DataBinding;
+import bind.ServletRequestDataBinder;
 import controls.BoardListController;
 import controls.Controller;
-import controls.LoginController;
-import controls.UserAddController;
-import controls.UserUpdateController;
-import user.User;
+import vo.User;
 
 @WebServlet("*.do")
 public class DispatcherServlet extends HttpServlet {
@@ -24,53 +23,18 @@ public class DispatcherServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String servletPath = request.getServletPath();
-		
-		
+			
 		try {
 			ServletContext sc = this.getServletContext();
 			
 			HashMap<String, Object> model = new HashMap<>();
-			model.put("userDao", sc.getAttribute("user"));
-			model.put("boardDao", sc.getAttribute("board"));
 			model.put("session", request.getSession());
 			
-			Controller pageController = null;
-			if(servletPath.equals("/board/list.do")) {
-				pageController = new BoardListController();
-			}else if(servletPath.equals("/user/add.do")) {
-				pageController = new UserAddController();
-				if(request.getParameter("email") != null) {
-					model.put("user", new User()
-							.setEmail(request.getParameter("email"))
-							.setGender(request.getParameter("gender"))
-							.setId(request.getParameter("id"))
-							.setName(request.getParameter("name"))
-							.setPassword(request.getParameter("password")));
-				}
-			}else if(servletPath.equals("/user/update.do")) {
-				pageController = new UserUpdateController();
-				if(request.getParameter("email")!= null) {
-					model.put("userUpdate",new User()
-							.setEmail(request.getParameter("email"))
-							.setId(request.getParameter("id"))
-							.setName(request.getParameter("name"))
-							.setPassword(request.getParameter("password"))
-							);
-				}else {
-					model.put("no",  Integer.parseInt(request.getParameter("no")));
-				}
-			}else if("/auth/login.do".equals(servletPath)) {
-				pageController = new LoginController();
-				if(request.getParameter("id")!= null) {
-					model.put("loginInfo", new User()
-							.setId(request.getParameter("id"))
-							.setPassword(request.getParameter("password")));
-				}
-				
-			}else if("/home.do".equals(servletPath)) {
-				response.sendRedirect("/index.jsp");
+			Controller pageController = (Controller) sc.getAttribute(servletPath);
+
+			if(pageController instanceof DataBinding) {
+				prepareRequestData(request, model, (DataBinding)pageController);
 			}
-			
 			String viewUrl = pageController.execute(model);
 			
 			for(String key : model.keySet()) {
@@ -89,6 +53,20 @@ public class DispatcherServlet extends HttpServlet {
 			request.setAttribute("error", e);
 			RequestDispatcher rd = request.getRequestDispatcher("/Error.jsp");
 			rd.forward(request, response);
+		}
+	}
+	private void prepareRequestData(HttpServletRequest request,
+			HashMap<String, Object> model , DataBinding dataBinding)
+	throws Exception{
+		Object[] dataBinders = dataBinding.getDataBinders();
+		String dataName = null;
+		Class<?> dataType = null;
+		Object dataObj = null;
+		for(int i=0; i< dataBinders.length; i+=2) {
+			dataName = (String) dataBinders[i];
+			dataType = (Class<?>) dataBinders[i+1];
+			dataObj = ServletRequestDataBinder.bind(request, dataType, dataName);
+			model.put(dataName, dataObj);
 		}
 	}
 
