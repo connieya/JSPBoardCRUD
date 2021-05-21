@@ -17,6 +17,7 @@ import controls.BoardListController;
 import controls.Controller;
 import vo.User;
 
+@SuppressWarnings("serial")
 @WebServlet("*.do")
 public class DispatcherServlet extends HttpServlet {
 		

@@ -12,14 +12,14 @@ import javax.sql.DataSource;
 import util.DBConnectionPool;
 import vo.Board;
 
-public class BoardDAO {
+public class MySqlBoardDAO implements BoardDao {
 	DataSource ds;
 
 	public void setDataSource(DataSource ds) {
 		this.ds = ds;
 	}
 	// 글 등록
-	public int write(String title, String userID, String content) throws Exception {
+	public int write(Board board) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -29,9 +29,9 @@ public class BoardDAO {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, next());
-			pstmt.setString(2, title);
-			pstmt.setString(3, content);
-			pstmt.setString(4, userID);
+			pstmt.setString(2, board.getTitle());
+			pstmt.setString(3, board.getContent());
+			pstmt.setString(4, board.getWriter());
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -158,7 +158,7 @@ public class BoardDAO {
 	}
 
 	// 글 수정하기
-	public int update(int bno, String title, String content) {
+	public int update(Board board) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -167,9 +167,9 @@ public class BoardDAO {
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, title);
-			pstmt.setString(2, content);
-			pstmt.setInt(3, bno);
+			pstmt.setString(1, board.getTitle());
+			pstmt.setString(2, board.getContent());
+			pstmt.setInt(3, board.getBno());
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 

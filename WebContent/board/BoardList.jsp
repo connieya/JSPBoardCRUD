@@ -1,8 +1,8 @@
-<%@page import="board.Board"%>
+<%@page import="vo.Board"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,19 +35,7 @@
 	<jsp:include page="../header.jsp"/>
 	<br/>
 	<h1 id="boardlist">게시판 리스트</h1> <br/>
-	<% 
-		String sessionID = null;
-		if(session.getAttribute("sessionID") != null){
-		sessionID = (String) session.getAttribute("sessionID");
-		}
-		if(sessionID !=null) {
-			
-		%>
-		<a href="write.jsp" class="btn btn-primary pull-right" style="float:right; margin-right:100px;" >글쓰기</a>
-	<%
-	}
-	%>
-	<br/>
+	<a href="write.jsp" class="btn btn-primary pull-right" style="float:right; margin-right:100px;" >글쓰기</a>
 	<br />
 	<div class="container">
 		<div class="row">
@@ -61,45 +49,18 @@
 				</tr>
 			</thead>
 			<tbody>
-			<jsp:useBean id="boards"
-			scope ="request"
-			class ="java.util.ArrayList"
-			type = "java.util.ArrayList<board.Board>" />
-			<%
-				int pagenum = 1;  // 기본 페이지는 1페이지니깐 초기화 시켜줌
-				//여기서 request.getParameter는 뭔데?....
-				if(request.getParameter("pagenum") != null){
-					pagenum = Integer.parseInt(request.getParameter("pagenum"));
-				}
-				
-				for(Board board : boards){							
-					%>
+			<c:forEach var="board" items="${boards}">
 				<tr>
-					<td><%= board.getBno() %></td>
-					<td><a id="detail" href="detail.jsp?bno=<%=board.getBno()%>"><%= board.getTitle() %></a></td>
-					<td><%= board.getWriter() %></td>
-					<td><%= board.getCreateTime() %></td>
-				</tr>
-				<% 
-					}
-			%>
+					<td>${board.no}</td>
+					<td><a id="detail" href="user/update.do?bno=${board.no }">${board.tittle}</a></td>
+					<td>${board.wrtier }</td>
+					<td>${board.createTime }</td>
+				</tr>	
+			</c:forEach>
 			</tbody>
-			</table>
-		 <%
-		 	if(pagenum != 1) {
-		 	
-		 %> 
-			 <a href="board.jsp?pagenum=<%= pagenum -1 %>" class="btn btn-success btn-arraw-left">이전</a>
-		<%      
-		 	}else {
-		%>
-			<a href="board.jsp?pagenum=<%= pagenum +1 %>" class="btn btn-success btn-arraw-left">다음</a>
-		<% 
-		 	}		
-		%>
-			
-			
-		
+			</table>	
+			 <a href="board.jsp?pagenum=" class="btn btn-success btn-arraw-left">이전</a>		
+			<a href="board.jsp?pagenum=" class="btn btn-success btn-arraw-left">다음</a>						
 		</div>
 	</div>
 	<jsp:include page="../tail.jsp" />

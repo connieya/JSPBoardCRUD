@@ -22,7 +22,6 @@ public class UserAddController implements Controller , DataBinding {
 			return "/user/UserForm.jsp";
 		}else {
 			userDao.join(user);
-			
 			return "redirect:home.do";
 		}
 	}

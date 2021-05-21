@@ -23,6 +23,7 @@ public class UserUpdateController implements Controller ,DataBinding {
 		if (user.getEmail() == null) {
 			Integer no = (Integer) model.get("no");
 			User detailInfo = userDao.userDetail(no);
+			model.put("user", detailInfo);
 			return "/user/UserForm.jsp";
 		} else {
 			userDao.update(user);

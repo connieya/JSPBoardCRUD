@@ -12,11 +12,12 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
 
+import controls.BoardAddController;
 import controls.BoardListController;
 import controls.LogOutController;
 import controls.LoginController;
 import controls.UserAddController;
-import dao.BoardDAO;
+import dao.MySqlBoardDAO;
 import dao.MySqlUserDAO;
 import util.DBConnectionPool;
 
@@ -31,8 +32,8 @@ public class ContextLoaderListener implements ServletContextListener {
 			DataSource ds = (DataSource) initialContext.lookup(
 					"java:comp/env/jdbc/pgh");
 					
-			BoardDAO boardDAO = new BoardDAO();
-			boardDAO.setDataSource(ds);
+			MySqlBoardDAO boardDao = new MySqlBoardDAO();
+			boardDao.setDataSource(ds);
 			
 			MySqlUserDAO userDao = new MySqlUserDAO();
 			userDao.setDataSource(ds);
@@ -41,9 +42,11 @@ public class ContextLoaderListener implements ServletContextListener {
 					new LoginController().setUserDao(userDao));
 			sc.setAttribute("/auth/logout.do", new LogOutController());
 			sc.setAttribute("/board/list.do",
-					new BoardListController().setBoardDao(boardDAO));
+					new BoardListController().setBoardDao(boardDao));
 			sc.setAttribute("/user/add.do",
 					new UserAddController().setUserDao(userDao));
+			sc.setAttribute("/board/add.do",
+					new BoardAddController().setBoardDao(boardDao));
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}

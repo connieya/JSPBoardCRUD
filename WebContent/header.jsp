@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 </head>
 <body>
-<jsp:useBean id="user" scope="session" class="user.User"/>
+<jsp:useBean id="user" scope="session" class="vo.User"/>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top ">
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
@@ -24,22 +24,22 @@
       <li class="nav-item">
         <a class="nav-link" href="<%=request.getContextPath() %>/board/list.do">게시판</a>
       </li>
-      		<c:if test="${empty sessionScope.user}">
+      		<c:if test="${!empty sessionScope.user}">
       	<li class="nav-item" >
-          <a class="nav-link" href="login.do">로그인</a>
+          <a class="nav-link" href="<%=request.getContextPath() %>/auth/login.do">로그인</a>
       </li>
       <li class="nav-item" >
-          <a class="nav-link" href="user/add.do">회원가입</a>     
+          <a class="nav-link" href="<%=request.getContextPath() %>/user/add.do">회원가입</a>     
       </li>
       		</c:if>
       			<li class="nav-item">
         	<span>${sessionScope.user.name}</span>
       			</li>
       	<li class="nav-item">
-          <a class="nav-link" href="logout.do">로그아웃</a> 
+          <a class="nav-link" href="<%=request.getContextPath() %>/auth/logout.do">로그아웃</a> 
          </li>
          <li>
-          <a class="nav-link" href="user/update.do?no=${user.no}">회원 수정</a>   
+          <a class="nav-link" href="<%=request.getContextPath() %>/user/update.do?no=${user.no}">회원 수정</a>   
       </li>        
     </ul>
    

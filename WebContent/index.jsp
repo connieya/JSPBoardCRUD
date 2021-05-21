@@ -20,24 +20,6 @@
 </head>
 <body>
 	<jsp:include page="header.jsp"/>
-	
-	<h1>메인화면</h1> <br/>
-	<% 
-	String sessionID = null;
-	if(session.getAttribute("sessionID") != null){
-			sessionID = (String) session.getAttribute("sessionID");
-	}
-	
-	if(sessionID != null){
-		
-	
-	%>
-	<h2 id="sessionID">	<span id="sessionID"><%=sessionID %></span> 님 환영합니다. </h2>
-	
-	<% 
-	}
-    %>
-	
 	<div class="container">
 		<div class="jumbotron" style="height: 400px;">
 			<div class="container">
@@ -50,14 +32,10 @@
 			  			<li>게시판 글 등록(로그인 해야 가능)</li>
 			  			<li>게시판 리스트(페이징 기능)</li>
 			  			<li>게시판 상세보기</li>
-			  			<li>게시판 글 수정,삭제(해당 작성자만 가능)</li>
-			  			
+			  			<li>게시판 글 수정,삭제(해당 작성자만 가능)</li>		
 			  		</ul>
 			</div>
 		</div>
-	</div>
-	
-	
-	
+	</div>		
 </body>
 </html>

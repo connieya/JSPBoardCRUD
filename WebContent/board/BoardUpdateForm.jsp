@@ -1,7 +1,3 @@
-<%@page import="java.io.PrintWriter"%>
-<%@page import="board.Board"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,48 +7,14 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/custom.css" >
 <style>
-	
-	 #detail{
+	#detail{
 	 	color: black;
 	 }
 </style>
 </head>
 <body>
-	<jsp:include page="../header.jsp"/>
-	<br/>
-	
-	
-	<br/>
-	<br />
-	<%
-		String UserId = null;
-		if(session.getAttribute("sessionID") != null){
-			UserId = (String) session.getAttribute("sessionID");
-		}
-	
-	
-		int bno = 0;
-		if(request.getParameter("bno") != null){
-			bno = Integer.parseInt(request.getParameter("bno"));
-		}
-		
-		
-		if(bno ==0){
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('유효하지 않은 글입니다.')");
-			script.println("location.href = 'board.jsp'");
-			script.println("</script>");
-			
-		}
-		
-		
-		
-		
-		Board board = new BoardDAO().detail(bno);
-	
-	%>
-	
+	<jsp:include page="../header.jsp"/>	
+	<br />	
 	<div class="container">
 		<div class="row">
 			<table class="table table-striped" style="text-align :center; border: 1px solid #dddddd">
@@ -64,43 +26,26 @@
 				<tbody>
 					<tr>
 						<td style="width:20%">글 제목</td>
-						<td colspan="2"><%=board.getTitle() %></td>
-					</tr>
-					
+						<td colspan="2">${board.title}</td>
+					</tr>	
 					<tr>
 						<td >작성자</td>
-						<td colspan="2"><%=board.getWriter() %></td>
-					</tr>
-					
+						<td colspan="2">${board.writer}></td>
+					</tr>				
 					<tr>
 						<td >작성일</td>
-						<td colspan="2"><%=board.getCreateTime() %></td>
+						<td colspan="2">${board.createTime}</td>
 					</tr>
 					<tr>
 						<td >글 내용</td>
-						<td colspan="2" style="height: 200px; text-align: left;"><%=board.getContent() %></td>
+						<td colspan="2" style="height: 200px; text-align: left;">${board.content}</td>
 					</tr>
 				</tbody>
 			</table>
-			<a  style="margin: 0px 5px" href="board.jsp" class="btn btn-primary">목록</a>
-			<% 
-			
-				if(UserId != null && UserId.equals(board.getWriter())){
-					
-					
-			%>
-				<a style="margin: 0px 5px"href="update.jsp?bno=<%= bno %>" class="btn btn-primary">수정</a>
-				
-				<a style="margin: 0px 5px" onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?bno=<%= bno %>" class="btn btn-primary">삭제</a>		
-			
-			<% 
-			
-				}
-			
-			%>
-		</div>
-	
+			<a  style="margin: 0px 5px" href="board.jsp" class="btn btn-primary">목록</a>	
+				<a style="margin: 0px 5px"href="update.jsp?bno=${board.bno}" class="btn btn-primary">수정</a>		
+				<a style="margin: 0px 5px" onclick="return confirm('정말로 삭제하시겠습니까?')" href="/board/delete.do?bno=${board.bno }" class="btn btn-primary">삭제</a>		
+		</div>	
 	</div>
-	
 </body>
 </html>

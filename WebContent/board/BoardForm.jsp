@@ -13,7 +13,7 @@
 	<div class="container" style="text-align: center; margin-top:10px;">
 		<h1>게시판 글 쓰기</h1>
 	<div class="jumbotron">	
-	<form action="boardAction.jsp" method="post">
+	<form action="/board/add.do" method="post">
   <div class="form-group">
     	<h2>제목:</h2>
     <input type="text" class="form-control"  name="title">

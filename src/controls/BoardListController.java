@@ -2,13 +2,13 @@ package controls;
 
 import java.util.Map;
 
-import dao.BoardDAO;
+import dao.MySqlBoardDAO;
 
 
 public class BoardListController implements Controller {
-	BoardDAO boardDao;
+	MySqlBoardDAO boardDao;
 	
-	public BoardListController setBoardDao(BoardDAO boardDao) {
+	public BoardListController setBoardDao(MySqlBoardDAO boardDao) {
 		this.boardDao = boardDao;
 		return this;
 	}
