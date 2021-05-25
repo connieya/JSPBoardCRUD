@@ -2,10 +2,11 @@ package controls;
 
 import java.util.Map;
 
+import annotation.Component;
 import bind.DataBinding;
 import dao.BoardDao;
 import vo.Board;
-
+@Component("/board/add.do")
 public class BoardAddController implements Controller, DataBinding {
 	BoardDao boardDao;
 	

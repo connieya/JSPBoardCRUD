@@ -2,9 +2,10 @@ package controls;
 
 import java.util.Map;
 
+import annotation.Component;
 import dao.MySqlBoardDAO;
 
-
+@Component("/board/list.do")
 public class BoardListController implements Controller {
 	MySqlBoardDAO boardDao;
 	

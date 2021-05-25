@@ -2,11 +2,12 @@ package controls;
 
 import java.util.Map;
 
+import annotation.Component;
 import bind.DataBinding;
 import dao.MySqlUserDAO;
 import vo.User;
 
-
+@Component("/user/add.do")
 public class UserAddController implements Controller , DataBinding {
 	MySqlUserDAO userDao;
 	

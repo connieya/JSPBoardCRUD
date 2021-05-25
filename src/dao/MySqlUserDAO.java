@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.sql.DataSource;
+
+import annotation.Component;
 import vo.User;
 
+@Component("memberDao")
 public class MySqlUserDAO implements UserDao {
 	DataSource ds;
 	

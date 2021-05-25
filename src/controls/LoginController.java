@@ -4,10 +4,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import annotation.Component;
 import dao.MySqlUserDAO;
 import vo.User;
 
-
+@Component("/auth/login.do")
 public class LoginController implements Controller {
 	MySqlUserDAO userDao;
 	
@@ -30,7 +31,7 @@ public class LoginController implements Controller {
 				session.setAttribute("user", user);
 				return "redirect:../board/list.do";
 			}else {
-				return "/auth/LoginFail";
+				return "/auth/LoginFail.jsp";
 			}
 		}
 	}

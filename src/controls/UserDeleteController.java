@@ -2,8 +2,10 @@ package controls;
 
 import java.util.Map;
 
+import annotation.Component;
 import dao.MySqlUserDAO;
 
+@Component("/user/delete.do")
 public class UserDeleteController implements Controller {
 	MySqlUserDAO userDao;
 	

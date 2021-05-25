@@ -2,12 +2,13 @@ package controls;
 
 import java.util.Map;
 
+import annotation.Component;
 import bind.DataBinding;
 import dao.MySqlUserDAO;
 import dao.UserDao;
 import vo.User;
 
-
+@Component("/user/update.do")
 public class UserUpdateController implements Controller ,DataBinding {
 	UserDao userDao;
 	

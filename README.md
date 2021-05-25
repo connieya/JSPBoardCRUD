@@ -53,3 +53,16 @@
 - 대체가 어렵다(MySQL 데이터베이스 -> 오라클 변경시 일부 SQL문을 변경해야함)
 - 의존 객체를 외부에서 주입하자.
 - Controller에 Dao를 주입 받기 위한 인스턴스 변수, 셋터 메서드 추가
+
+### `프로퍼티를 이용한 객체 관리`
+- application-context.properties & ApplicationContext 클래스 생성
+- 페이지 컨트롤러 & DAO 추가 시 프로퍼티 파일에 정보 추가
+- ContextLoaderListener 소스사 간결해짐
+- web.xml 파일에 프로퍼티 파일에 대한 경로 설정
+
+### `애노테이션을 이용한 객체 관리`
+- @Component 애노테이션 정의
+- DAO & 페이지 컨트롤러에 애노테이션 적용 
+- 프로퍼티파일에서 DAO & 페이지 컨트롤러 정보 제거
+- ApplicationContext 클래스 변경 -> @Component 애노테이션이 붙은 클래스를 찾는 메소드 추가
+- Reflections 라이브러리 , pom.xml에 설정
