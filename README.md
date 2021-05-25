@@ -66,3 +66,6 @@
 - 프로퍼티파일에서 DAO & 페이지 컨트롤러 정보 제거
 - ApplicationContext 클래스 변경 -> @Component 애노테이션이 붙은 클래스를 찾는 메소드 추가
 - Reflections 라이브러리 , pom.xml에 설정
+
+### `mybatis 사용`
+- 개발과 유지보수가 쉽도록 SQL을 별도의 파일로 분리

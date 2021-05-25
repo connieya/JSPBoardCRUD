@@ -6,16 +6,22 @@ import javax.servlet.http.HttpSession;
 
 import annotation.Component;
 import dao.MySqlUserDAO;
+import dao.UserDao;
 import vo.User;
 
 @Component("/auth/login.do")
 public class LoginController implements Controller {
-	MySqlUserDAO userDao;
+	UserDao userDao;
 	
-	public LoginController setUserDao(MySqlUserDAO userDao) {
+	public LoginController setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 		return this;
 	}
+	public Object[] getDataBinders() {
+	    return new Object[]{
+	        "loginInfo", vo.User.class
+	    };
+	  }
 	@Override
 	public String execute(Map<String, Object> model) throws Exception {
 		if(model.get("loginInfo") == null) {

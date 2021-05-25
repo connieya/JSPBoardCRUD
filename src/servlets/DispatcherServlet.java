@@ -25,6 +25,7 @@ public class DispatcherServlet extends HttpServlet {
 		
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=UTF-8");
 		String servletPath = request.getServletPath();
 			
 		try {
@@ -56,7 +57,7 @@ public class DispatcherServlet extends HttpServlet {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			System.out.println("dd" +e.getMessage());
 			request.setAttribute("error", e);
 			RequestDispatcher rd = request.getRequestDispatcher("/Error.jsp");
 			rd.forward(request, response);

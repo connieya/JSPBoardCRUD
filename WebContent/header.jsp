@@ -24,6 +24,9 @@
       <li class="nav-item">
         <a class="nav-link" href="<%=request.getContextPath() %>/board/list.do">게시판</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/BoardJSP/project/list.do">프로젝트</a>
+      </li>
       		<c:if test="${!empty sessionScope.user}">
       	<li class="nav-item" >
           <a class="nav-link" href="<%=request.getContextPath() %>/auth/login.do">로그인</a>
