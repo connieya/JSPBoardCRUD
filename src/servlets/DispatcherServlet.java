@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import bind.DataBinding;
 import bind.ServletRequestDataBinder;
 import context.ApplicationContext;
-import controls.BoardListController;
 import controls.Controller;
+import controls.board.BoardListController;
 import listeners.ContextLoaderListener;
 import vo.User;
 

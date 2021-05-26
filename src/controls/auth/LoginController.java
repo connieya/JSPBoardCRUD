@@ -1,10 +1,11 @@
-package controls;
+package controls.auth;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import annotation.Component;
+import controls.Controller;
 import dao.MySqlUserDAO;
 import dao.UserDao;
 import vo.User;

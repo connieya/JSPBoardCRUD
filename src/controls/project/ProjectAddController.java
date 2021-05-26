@@ -1,9 +1,10 @@
-package controls;
+package controls.project;
 
 import java.util.Map;
 
 import annotation.Component;
 import bind.DataBinding;
+import controls.Controller;
 import dao.ProjectDao;
 import vo.Project;
 

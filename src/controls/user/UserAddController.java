@@ -1,9 +1,10 @@
-package controls;
+package controls.user;
 
 import java.util.Map;
 
 import annotation.Component;
 import bind.DataBinding;
+import controls.Controller;
 import dao.MySqlUserDAO;
 import vo.User;
 

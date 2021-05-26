@@ -1,9 +1,10 @@
-package controls;
+package controls.board;
 
 import java.util.Map;
 
 import annotation.Component;
 import bind.DataBinding;
+import controls.Controller;
 import dao.BoardDao;
 import vo.Board;
 @Component("/board/add.do")

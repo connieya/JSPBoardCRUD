@@ -69,3 +69,8 @@
 
 ### `mybatis 사용`
 - 개발과 유지보수가 쉽도록 SQL을 별도의 파일로 분리
+- DAO 클래스에 DataSource 대신 SqlSessionFactory & SqlSession 객체 생성
+- SQL 맵퍼 파일 작성
+- mybatis 설정 파일 -> dao/mybatis.config.xml
+- DB 접속 정보 ->db.properties 생성
+- 데이터베이스와 관련된 작업은  mybatis에서 처리

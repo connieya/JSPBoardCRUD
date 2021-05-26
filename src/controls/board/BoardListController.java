@@ -1,8 +1,9 @@
-package controls;
+package controls.board;
 
 import java.util.Map;
 
 import annotation.Component;
+import controls.Controller;
 import dao.MySqlBoardDAO;
 
 @Component("/board/list.do")

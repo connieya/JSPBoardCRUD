@@ -22,29 +22,40 @@ public class ApplicationContext {
 	public Object getBean(String key) {
 		return objTable.get(key);
 	}
-
-	public ApplicationContext(String propertiesPath) throws Exception {
-		Properties props = new Properties();
-		props.load(new FileReader(propertiesPath));
-
-		prepareObjects(props);
-		prepareAnnotaionObjects();
-		injectDependency();
+	public void addBean(String name, Object obj) {
+		objTable.put(name, obj);
 	}
-
-	private void prepareAnnotaionObjects() throws InstantiationException, IllegalAccessException {
-		Reflections reflector = new Reflections("");
+	public void prepareObjectsByAnnotation(String basePackage) throws Exception{
+		Reflections reflector = new Reflections(basePackage);
 		
 		Set<Class<?>> list = reflector.getTypesAnnotatedWith(Component.class);
 		String key = null;
-		
 		for(Class<?> clazz : list) {
 			key = clazz.getAnnotation(Component.class).value();
 			objTable.put(key, clazz.newInstance());
 		}
 	}
-
-	private void injectDependency() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public void prepareObjectsByProperties(String propertiesPath) throws
+	Exception{
+		Properties props = new Properties();
+		props.load(new FileReader(propertiesPath));
+	
+		Context ctx = new InitialContext();
+		String key = null;
+		String value = null;
+		
+		for(Object item : props.keySet()) {
+			key = (String) item;
+			value = props.getProperty(key);
+			if(key.startsWith("jndi.")) {
+				objTable.put(key, ctx.lookup(value));
+			}else {
+				objTable.put(key, Class.forName(value).newInstance());
+			}
+		}
+	}
+	
+	public void injectDependency() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
 		for(String key : objTable.keySet()) {
 			if(!key.startsWith("jndi.")) {
@@ -75,21 +86,4 @@ public class ApplicationContext {
 		return null;
 	}
 
-	private void prepareObjects(Properties props) throws NamingException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-
-		Context ctx = new InitialContext();
-		String key = null;
-		String value = null;
-	
-		for(Object item : props.keySet()) {
-			key = (String) item;
-			value = props.getProperty(key);
-			if(key.startsWith("jndi.")) {
-				objTable.put(key, ctx.lookup(value));
-			}else {
-				objTable.put(key, Class.forName(value).newInstance());
-			}
-		}
-
-	}
 }
